@@ -29,4 +29,5 @@ android {
 dependencies {
     implementation project(":app_pojavlauncher")
     implementation 'androidx.appcompat:appcompat:1.5.0'
+    implementation fileTree(dir: '../app_pojavlauncher/libs', include: ['*.jar'])
 }

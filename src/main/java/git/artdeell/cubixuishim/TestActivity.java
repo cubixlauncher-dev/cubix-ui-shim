@@ -7,11 +7,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.kdt.mcgui.ProgressLayout;
 
 import net.kdt.pojavlaunch.JMinecraftVersionList;
 import net.kdt.pojavlaunch.MainActivity;
+import net.kdt.pojavlaunch.PojavProfile;
+import net.kdt.pojavlaunch.Tools;
 import net.kdt.pojavlaunch.extra.ExtraConstants;
 import net.kdt.pojavlaunch.extra.ExtraCore;
 import net.kdt.pojavlaunch.prefs.LauncherPreferences;
@@ -20,15 +23,30 @@ import net.kdt.pojavlaunch.progresskeeper.ProgressListener;
 import net.kdt.pojavlaunch.tasks.AsyncAssetManager;
 import net.kdt.pojavlaunch.tasks.AsyncMinecraftDownloader;
 import net.kdt.pojavlaunch.tasks.AsyncVersionList;
+import net.kdt.pojavlaunch.value.MinecraftAccount;
+import net.kdt.pojavlaunch.value.launcherprofiles.MinecraftProfile;
+
+import java.io.IOException;
 
 public class TestActivity extends AppCompatActivity {
-
+    TextView testView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
+        testView = findViewById(R.id.test_view);
         LauncherPreferences.DEFAULT_PREF.edit().putString(LauncherPreferences.PREF_KEY_CURRENT_PROFILE, "(Default)").commit();
+        if(PojavProfile.getCurrentProfileContent(this, null) == null) {
+            MinecraftAccount fake = new MinecraftAccount();
+            fake.username = "fake_ahh_mf";
+            try {
+                fake.save();
+                PojavProfile.setCurrentProfile(this, fake.username+".json");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
+        }
         ProgressKeeper.addListener(ProgressLayout.DOWNLOAD_MINECRAFT, new ProgressListener() {
             @Override
             public void onProgressStarted() {
@@ -37,7 +55,10 @@ public class TestActivity extends AppCompatActivity {
 
             @Override
             public void onProgressUpdated(int progress, int resid, Object... va) {
-                Log.i("TEST", progress+"% "+getString(resid, va));
+                runOnUiThread(()->{
+                    if(resid != -1) testView.setText(progress+"% "+getString(resid, va));
+                    else testView.setText(progress+"%");
+                });
             }
 
             @Override
@@ -51,13 +72,13 @@ public class TestActivity extends AppCompatActivity {
             Log.i("TEST", "Getting version list...");
             new AsyncVersionList().getVersionList(versions -> {
                 ExtraCore.setValue(ExtraConstants.RELEASE_TABLE, versions);
-                JMinecraftVersionList.Version version = versions.versions[0];
-                new AsyncMinecraftDownloader(this, version, version.id, new AsyncMinecraftDownloader.DoneListener() {
+                JMinecraftVersionList.Version version = Tools.getVersionInfo("hitech");
+                new AsyncMinecraftDownloader(this, version, "hitech", new AsyncMinecraftDownloader.DoneListener() {
                     @Override
                     public void onDownloadDone() {
                         ProgressKeeper.waitUntilDone(()->{
                             Intent i = new Intent(TestActivity.this, MainActivity.class);
-                            i.putExtra(INTENT_MINECRAFT_VERSION, version.id);
+                            i.putExtra(INTENT_MINECRAFT_VERSION, "hitech");
                             i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                             startActivity(i);
                             finish();
