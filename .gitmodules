@@ -1,0 +1,3 @@
+[submodule "cubix-proprietary"]
+	path = cubix-proprietary
+	url = https://github.com/cubixlauncher-dev/cubix-proprietary

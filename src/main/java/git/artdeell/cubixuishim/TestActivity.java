@@ -13,7 +13,6 @@ import com.kdt.mcgui.ProgressLayout;
 
 import net.kdt.pojavlaunch.JMinecraftVersionList;
 import net.kdt.pojavlaunch.MainActivity;
-import net.kdt.pojavlaunch.PojavProfile;
 import net.kdt.pojavlaunch.Tools;
 import net.kdt.pojavlaunch.extra.ExtraConstants;
 import net.kdt.pojavlaunch.extra.ExtraCore;
@@ -36,17 +35,6 @@ public class TestActivity extends AppCompatActivity {
         setContentView(R.layout.activity_test);
         testView = findViewById(R.id.test_view);
         LauncherPreferences.DEFAULT_PREF.edit().putString(LauncherPreferences.PREF_KEY_CURRENT_PROFILE, "(Default)").commit();
-        if(PojavProfile.getCurrentProfileContent(this, null) == null) {
-            MinecraftAccount fake = new MinecraftAccount();
-            fake.username = "fake_ahh_mf";
-            try {
-                fake.save();
-                PojavProfile.setCurrentProfile(this, fake.username+".json");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-        }
         ProgressKeeper.addListener(ProgressLayout.DOWNLOAD_MINECRAFT, new ProgressListener() {
             @Override
             public void onProgressStarted() {
