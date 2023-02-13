@@ -1,7 +1,10 @@
 package git.artdeell.cubixuishim;
 
+import android.content.Context;
+
 import net.kdt.pojavlaunch.progresskeeper.ProgressKeeper;
 import net.kdt.pojavlaunch.progresskeeper.TaskCountListener;
+import net.kdt.pojavlaunch.services.ProgressServiceKeeper;
 
 import java.util.HashMap;
 
@@ -59,6 +62,18 @@ public class ProgressShim implements ProgressGranter {
     @Override
     public int getTaskCount() {
         return ProgressKeeper.getTaskCount();
+    }
+
+    @Override
+    public Object installService(Context context) {
+        ProgressServiceKeeper keeper = new ProgressServiceKeeper(context);
+        ProgressKeeper.addTaskCountListener(keeper);
+        return keeper;
+    }
+
+    @Override
+    public void uninstallService(Object object) {
+        ProgressKeeper.removeTaskCountListener((TaskCountListener) object);
     }
 
     static class ListenerWrapper implements net.kdt.pojavlaunch.progresskeeper.ProgressListener {

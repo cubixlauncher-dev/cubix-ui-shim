@@ -4,7 +4,7 @@ plugins {
 
 android {
     namespace 'git.artdeell.cubixuishim'
-    compileSdkVersion 32
+    compileSdkVersion 33
 
     defaultConfig {
         applicationId "git.artdeell.cubixuishim"
