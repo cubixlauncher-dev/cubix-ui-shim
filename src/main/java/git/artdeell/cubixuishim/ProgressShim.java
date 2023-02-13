@@ -76,6 +76,11 @@ public class ProgressShim implements ProgressGranter {
         ProgressKeeper.removeTaskCountListener((TaskCountListener) object);
     }
 
+    @Override
+    public void postProgress(String label, int prog, int resid, Object[] va) {
+        ProgressKeeper.submitProgress(label, prog, resid, va);
+    }
+
     static class ListenerWrapper implements net.kdt.pojavlaunch.progresskeeper.ProgressListener {
         private final ProgressListener listener;
         public ListenerWrapper(ProgressListener listener) {
