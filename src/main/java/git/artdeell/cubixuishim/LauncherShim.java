@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import net.kdt.pojavlaunch.CubixAccount;
 import net.kdt.pojavlaunch.JMinecraftVersionList;
 import net.kdt.pojavlaunch.MainActivity;
 import net.kdt.pojavlaunch.Tools;
@@ -56,6 +57,18 @@ public class LauncherShim implements LauncherInterface {
                 receiver.onError(e);
             }
         });
+    }
+
+    @Override
+    public void writeCubixAccount(Context context, String username, String token) {
+        new CubixAccount(username, token).save(context);
+    }
+
+    @Override
+    public String[] readCubixAccount(Context context) {
+        CubixAccount account = CubixAccount.getAccount(context);
+        if(account == null) return null;
+        return new String[] {account.username, account.cubixToken};
     }
 
 }
