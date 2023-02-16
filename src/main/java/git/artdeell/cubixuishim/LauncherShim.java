@@ -19,6 +19,7 @@ import java.io.File;
 import git.artdeell.cubix.proprietary.ErrorReceiver;
 import git.artdeell.cubix.proprietary.Launcher;
 import git.artdeell.cubix.proprietary.LauncherInterface;
+import git.artdeell.cubix.proprietary.utils.IntentReceiver;
 
 public class LauncherShim implements LauncherInterface {
     public static void init() {
@@ -31,7 +32,7 @@ public class LauncherShim implements LauncherInterface {
     }
 
     @Override
-    public void downloadAndStartGame(Activity activity, String versionName, ErrorReceiver receiver) {
+    public void downloadAndStartGame(Activity activity, String versionName, ErrorReceiver receiver, IntentReceiver intentReceiver) {
         ProgressKeeper.waitUntilDone(()->{
             try {
                 JMinecraftVersionList.Version version = Tools.getVersionInfo(versionName);
@@ -42,9 +43,7 @@ public class LauncherShim implements LauncherInterface {
                             Intent i = new Intent(activity, MainActivity.class);
                             i.putExtra(INTENT_MINECRAFT_VERSION, versionName);
                             i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                            activity.startActivity(i);
-                            activity.finish();
-                            android.os.Process.killProcess(android.os.Process.myPid()); //You should kill yourself, NOW!
+                            intentReceiver.receiveIntent(i);
                         });
                     }
 
