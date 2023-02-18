@@ -1,6 +1,7 @@
 package git.artdeell.cubixuishim;
 
 import android.content.Context;
+import android.util.Log;
 
 import net.kdt.pojavlaunch.progresskeeper.ProgressKeeper;
 import net.kdt.pojavlaunch.progresskeeper.TaskCountListener;
@@ -98,6 +99,7 @@ public class ProgressShim implements ProgressGranter {
 
         @Override
         public void onProgressEnded() {
+            Log.i("ProgressSkim", "progressEnded");
             listener.progressEnded();
         }
     }

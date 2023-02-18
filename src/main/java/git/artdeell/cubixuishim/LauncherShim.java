@@ -49,6 +49,7 @@ public class LauncherShim implements LauncherInterface {
 
                     @Override
                     public void onDownloadFailed(Throwable throwable) {
+                        Log.i("Shim", "Received onDownloadFailed()");
                         receiver.onError(throwable);
                     }
                 });
