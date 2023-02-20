@@ -7,10 +7,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import androidx.fragment.app.Fragment;
+
 import net.kdt.pojavlaunch.CubixAccount;
 import net.kdt.pojavlaunch.JMinecraftVersionList;
 import net.kdt.pojavlaunch.MainActivity;
 import net.kdt.pojavlaunch.Tools;
+import net.kdt.pojavlaunch.prefs.screens.LauncherPreferenceFragment;
 import net.kdt.pojavlaunch.progresskeeper.ProgressKeeper;
 import net.kdt.pojavlaunch.tasks.AsyncMinecraftDownloader;
 
@@ -69,6 +72,11 @@ public class LauncherShim implements LauncherInterface {
         CubixAccount account = CubixAccount.getAccount(context);
         if(account == null) return null;
         return new String[] {account.username, account.cubixToken};
+    }
+
+    @Override
+    public Fragment createLauncherPreferenceFragment() {
+        return new LauncherPreferenceFragment();
     }
 
 }

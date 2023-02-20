@@ -30,5 +30,6 @@ dependencies {
     implementation project(":app_pojavlauncher")
     implementation project(":cubix-ui-shim:cubix-proprietary")
     implementation 'androidx.appcompat:appcompat:1.5.0'
+    implementation 'androidx.preference:preference:1.1.1'
     implementation fileTree(dir: '../app_pojavlauncher/libs', include: ['*.jar'])
 }
