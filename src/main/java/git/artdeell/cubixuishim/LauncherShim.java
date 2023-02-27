@@ -13,7 +13,9 @@ import net.kdt.pojavlaunch.CubixAccount;
 import net.kdt.pojavlaunch.JMinecraftVersionList;
 import net.kdt.pojavlaunch.MainActivity;
 import net.kdt.pojavlaunch.Tools;
+import net.kdt.pojavlaunch.prefs.screens.LauncherPreferenceControlFragment;
 import net.kdt.pojavlaunch.prefs.screens.LauncherPreferenceFragment;
+import net.kdt.pojavlaunch.prefs.screens.LauncherPreferenceVideoFragment;
 import net.kdt.pojavlaunch.progresskeeper.ProgressKeeper;
 import net.kdt.pojavlaunch.tasks.AsyncMinecraftDownloader;
 
@@ -75,8 +77,9 @@ public class LauncherShim implements LauncherInterface {
     }
 
     @Override
-    public Fragment createLauncherPreferenceFragment() {
-        return new LauncherPreferenceFragment();
+    public Fragment createLauncherPreferenceFragment(boolean which) {
+        if(which) return new LauncherPreferenceVideoFragment();
+        else return new LauncherPreferenceControlFragment();
     }
 
 }
