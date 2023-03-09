@@ -38,7 +38,9 @@ public class LauncherShim implements LauncherInterface {
 
     @Override
     public void downloadAndStartGame(Activity activity, String versionName, ErrorReceiver receiver, IntentReceiver intentReceiver) {
+        Log.i("Shim", "Starting to wait...");
         ProgressKeeper.waitUntilDone(()->{
+            Log.i("Shim", "Wait is over!");
             try {
                 JMinecraftVersionList.Version version = Tools.getVersionInfo(versionName);
                 new AsyncMinecraftDownloader(activity, version, versionName, new AsyncMinecraftDownloader.DoneListener() {
