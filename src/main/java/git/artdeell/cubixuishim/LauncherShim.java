@@ -67,6 +67,16 @@ public class LauncherShim implements LauncherInterface {
     }
 
     @Override
+    public void interruptDownload() {
+        AsyncMinecraftDownloader.interrupt();
+    }
+
+    @Override
+    public boolean isDownloading() {
+        return false;
+    }
+
+    @Override
     public void writeCubixAccount(Context context, String username, String token) {
         new CubixAccount(username, token).save(context);
     }
