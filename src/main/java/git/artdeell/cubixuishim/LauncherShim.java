@@ -13,6 +13,7 @@ import net.kdt.pojavlaunch.CubixAccount;
 import net.kdt.pojavlaunch.JMinecraftVersionList;
 import net.kdt.pojavlaunch.MainActivity;
 import net.kdt.pojavlaunch.Tools;
+import net.kdt.pojavlaunch.prefs.LauncherPreferences;
 import net.kdt.pojavlaunch.prefs.screens.LauncherPreferenceControlFragment;
 import net.kdt.pojavlaunch.prefs.screens.LauncherPreferenceFragment;
 import net.kdt.pojavlaunch.prefs.screens.LauncherPreferenceVideoFragment;
@@ -92,6 +93,15 @@ public class LauncherShim implements LauncherInterface {
     public Fragment createLauncherPreferenceFragment(boolean which) {
         if(which) return new LauncherPreferenceVideoFragment();
         else return new LauncherPreferenceControlFragment();
+    }
+
+    @Override
+    public void ensureMinimumMemory(Context context, int minimumMemory) {
+        LauncherPreferences.loadPreferences(context);
+        if(LauncherPreferences.PREF_RAM_ALLOCATION < minimumMemory) {
+            LauncherPreferences.DEFAULT_PREF.edit().putInt("allocation", minimumMemory).apply();
+            LauncherPreferences.PREF_RAM_ALLOCATION = minimumMemory;
+        }
     }
 
 }

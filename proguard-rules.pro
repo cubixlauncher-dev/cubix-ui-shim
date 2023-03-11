@@ -19,3 +19,14 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+-keep class net.kdt.** { *; }
+-keep class org.lwjgl.** { *; }
+
+-keep,allowobfuscation @interface git.artdeell.cubix.proprietary.Keep
+
+# Do not strip any method/class that is annotated with @DoNotStrip
+-keep @git.artdeell.cubix.proprietary.Keep class *
+-keepclassmembers class * {
+    @git.artdeell.cubix.proprietary.Keep *;
+}
