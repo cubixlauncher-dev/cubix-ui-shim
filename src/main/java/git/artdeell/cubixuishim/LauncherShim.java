@@ -2,6 +2,7 @@ package git.artdeell.cubixuishim;
 
 import static net.kdt.pojavlaunch.MainActivity.INTENT_MINECRAFT_VERSION;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -102,6 +103,12 @@ public class LauncherShim implements LauncherInterface {
             LauncherPreferences.DEFAULT_PREF.edit().putInt("allocation", minimumMemory).apply();
             LauncherPreferences.PREF_RAM_ALLOCATION = minimumMemory;
         }
+    }
+
+    @SuppressLint("ApplySharedPref")
+    @Override
+    public void eraseSettings() {
+        LauncherPreferences.DEFAULT_PREF.edit().clear().commit();
     }
 
 }
