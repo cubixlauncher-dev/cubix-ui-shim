@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import net.kdt.pojavlaunch.CubixAccount;
 import net.kdt.pojavlaunch.JMinecraftVersionList;
 import net.kdt.pojavlaunch.MainActivity;
+import net.kdt.pojavlaunch.TestStorageActivity;
 import net.kdt.pojavlaunch.Tools;
 import net.kdt.pojavlaunch.prefs.LauncherPreferences;
 import net.kdt.pojavlaunch.prefs.screens.LauncherPreferenceControlFragment;
@@ -109,6 +110,16 @@ public class LauncherShim implements LauncherInterface {
     @Override
     public void eraseSettings() {
         LauncherPreferences.DEFAULT_PREF.edit().clear().commit();
+    }
+
+    @Override
+    public Intent getLauncherStartupIntent(Context context) {
+        return new Intent(context, TestStorageActivity.class);
+    }
+
+    @Override
+    public int getShimBuildCode() {
+        return BuildConfig.VERSION_CODE;
     }
 
 }
