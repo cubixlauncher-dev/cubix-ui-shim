@@ -98,12 +98,14 @@ public class LauncherShim implements LauncherInterface {
     }
 
     @Override
-    public void ensureMinimumMemory(Context context, int minimumMemory) {
+    public boolean ensureMinimumMemory(Context context, int minimumMemory, boolean dryRun) {
         LauncherPreferences.loadPreferences(context);
         if(LauncherPreferences.PREF_RAM_ALLOCATION < minimumMemory) {
+            if(dryRun) return false;
             LauncherPreferences.DEFAULT_PREF.edit().putInt("allocation", minimumMemory).apply();
             LauncherPreferences.PREF_RAM_ALLOCATION = minimumMemory;
         }
+        return true;
     }
 
     @SuppressLint("ApplySharedPref")
@@ -120,6 +122,11 @@ public class LauncherShim implements LauncherInterface {
     @Override
     public int getShimBuildCode() {
         return BuildConfig.VERSION_CODE;
+    }
+
+    public void loadSettings(Activity context) {
+        LauncherPreferences.computeNotchSize(context);
+        LauncherPreferences.loadPreferences(context);
     }
 
 }
