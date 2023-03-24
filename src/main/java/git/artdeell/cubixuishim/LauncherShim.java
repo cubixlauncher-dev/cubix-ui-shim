@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.provider.DocumentsContract;
 import android.util.Log;
 
 import androidx.fragment.app.Fragment;
@@ -127,6 +128,13 @@ public class LauncherShim implements LauncherInterface {
     public void loadSettings(Activity context) {
         LauncherPreferences.computeNotchSize(context);
         LauncherPreferences.loadPreferences(context);
+    }
+
+    @Override
+    public Intent getGameDirIntent(Context context) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setDataAndType(DocumentsContract.buildDocumentUri(context.getString(net.kdt.pojavlaunch.R.string.storageProviderAuthorities), Tools.DIR_GAME_HOME), DocumentsContract.Document.MIME_TYPE_DIR);
+        return intent;
     }
 
 }
