@@ -10,7 +10,7 @@ android {
         applicationId "com.cubix.launcher"
         minSdkVersion 21
         targetSdkVersion 32
-        versionCode 14
+        versionCode 22
         versionName "1.1"
     }
 
