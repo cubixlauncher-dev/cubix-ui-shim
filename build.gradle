@@ -1,5 +1,5 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.application' version '7.4.2'
 }
 
 android {
@@ -10,7 +10,7 @@ android {
         applicationId "com.cubix.launcher"
         minSdkVersion 21
         targetSdkVersion 32
-        versionCode 22
+        versionCode 23
         versionName "1.1"
     }
 
