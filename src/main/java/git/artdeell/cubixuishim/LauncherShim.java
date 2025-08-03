@@ -18,12 +18,14 @@ import net.kdt.pojavlaunch.TestStorageActivity;
 import net.kdt.pojavlaunch.Tools;
 import net.kdt.pojavlaunch.prefs.LauncherPreferences;
 import net.kdt.pojavlaunch.prefs.screens.LauncherPreferenceControlFragment;
-import net.kdt.pojavlaunch.prefs.screens.LauncherPreferenceFragment;
 import net.kdt.pojavlaunch.prefs.screens.LauncherPreferenceVideoFragment;
 import net.kdt.pojavlaunch.progresskeeper.ProgressKeeper;
 import net.kdt.pojavlaunch.tasks.AsyncMinecraftDownloader;
+import net.kdt.pojavlaunch.tasks.MinecraftDownloader;
 
 import java.io.File;
+
+
 
 import git.artdeell.cubix.proprietary.ErrorReceiver;
 import git.artdeell.cubix.proprietary.Launcher;
@@ -46,8 +48,7 @@ public class LauncherShim implements LauncherInterface {
         ProgressKeeper.waitUntilDone(()->{
             Log.i("Shim", "Wait is over!");
             try {
-                JMinecraftVersionList.Version version = Tools.getVersionInfo(versionName);
-                new AsyncMinecraftDownloader(activity, version, versionName, new AsyncMinecraftDownloader.DoneListener() {
+                new MinecraftDownloader().start(activity, null, versionName, new AsyncMinecraftDownloader.DoneListener() {
                     @Override
                     public void onDownloadDone() {
                         ProgressKeeper.waitUntilDone(() -> {
@@ -72,7 +73,7 @@ public class LauncherShim implements LauncherInterface {
 
     @Override
     public void interruptDownload() {
-        AsyncMinecraftDownloader.interrupt();
+        MinecraftDownloader.interrupt();
     }
 
     @Override
@@ -122,18 +123,17 @@ public class LauncherShim implements LauncherInterface {
 
     @Override
     public int getShimBuildCode() {
-        return BuildConfig.VERSION_CODE;
+        return 0;
     }
 
     public void loadSettings(Activity context) {
-        LauncherPreferences.computeNotchSize(context);
         LauncherPreferences.loadPreferences(context);
     }
 
     @Override
     public Intent getGameDirIntent(Context context) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setDataAndType(DocumentsContract.buildDocumentUri(context.getString(net.kdt.pojavlaunch.R.string.storageProviderAuthorities), Tools.DIR_GAME_HOME), DocumentsContract.Document.MIME_TYPE_DIR);
+        intent.setDataAndType(DocumentsContract.buildDocumentUri(context.getString(git.artdeell.mojo.R.string.storageProviderAuthorities), Tools.DIR_GAME_HOME), DocumentsContract.Document.MIME_TYPE_DIR);
         return intent;
     }
 

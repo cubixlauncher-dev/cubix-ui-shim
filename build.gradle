@@ -1,15 +1,15 @@
 plugins {
-    id 'com.android.application' version '7.4.2'
+    id 'com.android.application' version '8.5.2'
 }
 
 android {
     namespace 'git.artdeell.cubixuishim'
-    compileSdkVersion 33
+    compileSdkVersion 35
 
     defaultConfig {
         applicationId "com.cubix.launcher"
         minSdkVersion 21
-        targetSdkVersion 33
+        targetSdkVersion 35
         versionCode 23
         versionName "1.1"
     }

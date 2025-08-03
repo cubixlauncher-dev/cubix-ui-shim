@@ -109,8 +109,9 @@ public class ProgressShim implements ProgressGranter {
             this.listener = listener;
         }
         @Override
-        public void onUpdateTaskCount(int taskCount) {
+        public boolean onUpdateTaskCount(int taskCount) {
             listener.updateCount(taskCount);
+            return false;
         }
     }
 }
