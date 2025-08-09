@@ -38,6 +38,9 @@ android {
             enableSplit = false
         }
     }
+    buildFeatures {
+        buildConfig true
+    }
 }
 
 dependencies {
