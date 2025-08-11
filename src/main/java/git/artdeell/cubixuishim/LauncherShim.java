@@ -123,11 +123,16 @@ public class LauncherShim implements LauncherInterface {
 
     @Override
     public int getShimBuildCode() {
-        return 0;
+        return BuildConfig.VERSION_CODE;
     }
 
     public void loadSettings(Activity context) {
         LauncherPreferences.loadPreferences(context);
+    }
+
+    @Override
+    public String getBuildType() {
+        return BuildConfig.BUILD_TYPE;
     }
 
     @Override
