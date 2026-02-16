@@ -53,4 +53,5 @@ dependencies {
     implementation project(":cubix-ui-shim:cubix-proprietary")
     implementation 'androidx.preference:preference:1.1.1'
     implementation fileTree(dir: '../app_pojavlauncher/libs', include: ['*.jar'])
+    implementation files("../app_pojavlauncher/libs/ltw-release.aar")
 }

@@ -30,3 +30,6 @@
 -keepclassmembers class * {
     @git.artdeell.cubix.proprietary.Keep *;
 }
+
+-dontwarn com.google.android.gms.**
+-dontwarn com.google.android.play.**
